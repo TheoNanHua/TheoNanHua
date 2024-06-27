@@ -1,0 +1,24 @@
+import numpy as np
+
+# Define a simple RNN architecture
+class RNN:
+    def __init__(self, input_dim, hidden_dim, output_dim):
+        self.Wxh = np.random.randn(input_dim, hidden_dim)
+        self.Whh = np.random.randn(hidden_dim, hidden_dim)
+        self.Why = np.random.randn(hidden_dim, output_dim)
+
+    def forward(self, x):
+        h = np.zeros((x.shape[0], self.hidden_dim))
+        for t in range(x.shape[0]):
+            h[t] = np.tanh(np.dot(x[t], self.Wxh) + np.dot(h[t-1], self.Whh))
+        y = np.dot(h, self.Why)
+        return y
+
+# Create an instance of the RNN
+rnn = RNN(input_dim=10, hidden_dim=20, output_dim=10)
+
+# Generate some sample input data
+x = np.random.rand(10, 10)
+
+# Run the input data through the RNN
+y = rnn.forward(x)
